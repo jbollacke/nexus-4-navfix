@@ -30,7 +30,7 @@ echo "Licenses:"
 echo
 echo "== APK Tool =="
 echo "Apache License 2.0"
-echo "Origin: https://code.google.com/p/android-apktool"
+echo "Origin: http://ibotpeaches.github.io/Apktool/"
 echo
 echo "== zipalign =="
 echo "Android Software Development Kit License"
@@ -46,8 +46,14 @@ pause "Press [Enter] to continue (if you agree with the text above)..."
 echo "Downloading..."
 rm -f tools/tools.tar.gz
 curl -o tools/tools.tar.gz -L $URL &>/dev/null
+curl -o tools/apktool_2.0.2.jar -L https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.0.2.jar &>/dev/null
 
 if [ ! -f "tools/tools.tar.gz" ]; then
+    echo "Download failed"
+    exit 1
+fi
+
+if [ ! -f "tools/apktool_2.0.2.jar" ]; then
     echo "Download failed"
     exit 1
 fi
@@ -56,6 +62,8 @@ echo "Extracting..."
 cd tools
 tar -xzf tools.tar.gz &>/dev/null
 rm tools.tar.gz
+rm apktool.jar
+mv apktool_2.0.2.jar apktool.jar
 cd ..
 
 if ! tools/checktools.sh; then
